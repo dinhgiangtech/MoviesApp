@@ -1,5 +1,5 @@
  
-export const OscarMovies=  [
+const OscarMovies2012=  [
   {
     adult: false,
     backdrop_path: '/bYimqNnizPUCnL5HOdoCW02IGmH.jpg',
@@ -15,7 +15,7 @@ export const OscarMovies=  [
     title: 'The Artist',
     video: false,
     vote_average: 7.4,
-    vote_count: 2397
+    vote_count: 2397,
   },
   {
     adult: false,
@@ -60,8 +60,8 @@ export const OscarMovies=  [
     original_language: 'en',
     original_title: 'The Help',
     overview: `Aibileen Clark is a middle-aged African-American maid who has spent her life raising white children and has recently lost her only son; Minny Jackson is an African-American maid who has often offended her employers despite her family's struggles with money and her desperate need for jobs; and Eugenia "Skeeter" Phelan is 
-a young white woman who has recently moved back home after graduating college to find out her childhood maid has 
-mysteriously disappeared. These three stories intertwine to explain how life in Jackson, Mississippi revolves around "the help"; yet they are always kept at a certain distance because of racial lines.`,
+    a young white woman who has recently moved back home after graduating college to find out her childhood maid has 
+      mysteriously disappeared. These three stories intertwine to explain how life in Jackson, Mississippi revolves around "the help"; yet they are always kept at a certain distance because of racial lines.`,
     popularity: 21.228,
     poster_path: '/7XLSwxpfpPoJyTdJVot6a42TS2V.jpg',
     release_date: '2011-08-09',
@@ -158,7 +158,7 @@ mysteriously disappeared. These three stories intertwine to explain how life in 
 ]
  
  
- const movies=[
+ const Marvel=[
     {
       adult: false,
       backdrop_path: '/kaIfm5ryEOwYg8mLbq8HkPuM1Fo.jpg',
@@ -602,7 +602,7 @@ mysteriously disappeared. These three stories intertwine to explain how life in 
       vote_count: 8102
     },
 ]
-export const DCMovies=[
+ const DCMovies=[
   {
     adult: false,
     backdrop_path: '/egg7KFi18TSQc1s24RMmR9i2zO6.jpg',
@@ -944,4 +944,11 @@ export const DCMovies=[
     vote_count: 4513
   }
 ]
+
+
+Marvel.map(item=>{item.typeMovie="Mavel"})
+DCMovies.map(item=>{item.typeMovie="DC"})
+OscarMovies2012.map(item=>{item.typeMovies="Oscar"})
+movies=Marvel.concat(DCMovies,OscarMovies2012)
+
 export default movies;

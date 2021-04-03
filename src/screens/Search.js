@@ -28,6 +28,7 @@ import {
 import movies from '../Service/index';
 const widthWindow = Dimensions.get('window').width;
 const urlImage = 'https://image.tmdb.org/t/p/w500/';
+
 function ItemList(props) {
   return (
     <TouchableOpacity
@@ -84,7 +85,7 @@ const searchEngine = ({navigation, route}) => {
   }
 
   return (
-    <>
+    
       <View style={styles.wrap}>
         <KeyboardAvoidingView>
           <View style={styles.containerInput}>
@@ -116,7 +117,7 @@ const searchEngine = ({navigation, route}) => {
           }
         </View>
       </View>
-    </>
+    
   );
 };
 

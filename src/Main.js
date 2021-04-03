@@ -26,12 +26,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import RootNavigation from './src/NavigationDrawer';
-import Main from './src/Main'
-import {mainReducer} from './src/Redux/reducer'
-import {Provider} from 'react-redux'
-import {createStore} from 'redux'
-const store=createStore(mainReducer)
+import RootNavigation from './NavigationDrawer';
 
 
 
@@ -39,8 +34,7 @@ const store=createStore(mainReducer)
 
 const App = () => {
   return (
-    <Provider store={store}><Main/></Provider>
-)
+  <RootNavigation></RootNavigation>)
   
 };
 

@@ -24,6 +24,7 @@ function Header({title, onBack,navigation}) {
   );
 }
 
+
 const styles = StyleSheet.create({
   header: {
     width: '100%',

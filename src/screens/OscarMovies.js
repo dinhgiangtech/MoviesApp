@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -8,12 +8,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from 'react-native';
-
 import Header from '../Component/HeaderDrawer'
-import { useDispatch, useSelector } from 'react-redux';
-import {filterMarvel} from '../Redux/actions'
-
+import movies from '../Service/index';
 
 const urlImage = 'https://image.tmdb.org/t/p/w500/';
 function ItemList(props) {
@@ -44,23 +42,12 @@ function ItemList(props) {
   );
 }
 
-const ListMovies = ({navigation}) => {
-  const data = useSelector(state => state.movies)
-  
-  const [movies,setMovies]=useState([data])
-  useEffect(() => {
-    // Update the document title using the browser API
-   
-  },[]);
-
-  
-  
+const OscarMovies = ({navigation}) => {
   return (
     <View style={styles.wrap}>
-      <Header title={"Marvel Movies"} navigation={navigation} />
+      <Header title={"Oscar Moivies"} navigation={navigation} />
 
       <View>
-       
         <FlatList
           data={movies}
           keyExtractor={item => item.id}
@@ -76,9 +63,10 @@ const styles = StyleSheet.create({
   wrap: {
     flex: 1,
     backgroundColor: 'rgb(26, 26, 26)',
+    
   },
   header: {
-    width: '100%',
+    width: Dimensions.get('window').width,
     height: 60,
     backgroundColor: 'rgb(255, 255, 51)',
     flexDirection: 'row',
@@ -136,14 +124,5 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 15,
   },
-  input: {
-    height: 50,
-    borderColor: '#000',
-    paddingLeft: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    width: '80%',
-    marginBottom: 10,
-  },
 });
-export default ListMovies;
+export default OscarMovies;
