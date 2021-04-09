@@ -12,24 +12,24 @@ import {
   Image,
   KeyboardAvoidingView,
 } from 'react-native';
+import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import movies from '../Service/index';
 
 
 function Header({navigation,title}) {
   return (
     <KeyboardAvoidingView>
-    <View style={styles.header}>
+    <View style={styles.header}> 
+   
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <Image
           style={styles.imgHaber}
           source={require('../Image/iconfinder_menu-alt_134216.png')}
         />
       </TouchableOpacity>
-      <TextInput
-              style={styles.input}
-              placeholder={'Search'}
-              
-              ></TextInput>
+      <View style={styles.txtHeader}>
+     <Text style={styles.text}>{title}</Text>
+     </View>
       <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <Image
           style={styles.imgSearch}
@@ -54,10 +54,12 @@ const styles = StyleSheet.create({
   },
 
   txtHeader: {
-    marginLeft: 85,
-    marginTop: 8,
+    
+    justifyContent:'center',
+    alignItems:'center',
     fontSize: 30,
     color: 'rgb(26, 26, 0)',
+     width: '70%',
   },
  
   input: {
@@ -73,7 +75,9 @@ const styles = StyleSheet.create({
   
   text: {
     marginBottom: 10,
-    fontSize: 20,
+    fontSize: 30,
+    marginLeft:50,
+    color:'#000'
   },
   rate: {
     flexDirection: 'row',

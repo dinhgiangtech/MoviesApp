@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../Component/Header';
 
 import {
@@ -20,24 +20,28 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import movies from '../Service/index';
+
+import { getDetail,getState } from '../Redux/Selector';
+import { connect } from 'react-redux';
 
 const widthWindow = Dimensions.get('window').width;
 
-const DetailMovie = ({navigation, route}) => {
-  const id = route.params.id;
-  console.log(id);
-  const data = movies.filter(item => {
-    return item.id === id;
-  });
+const DetailMovie = (props) => {
+  const {id}=props.route.params
+  useEffect(()=>{
+      dispatch({ type: "API_CALL_REQUEST" })
+  },[])
+
+ 
+  const data = props.movies
   const urlImage = 'https://image.tmdb.org/t/p/w500/';
   return (
     <ScrollView>
       <View style={styles.container}>
         <Header
           title={'MovieDetail'}
-          onBack={() => navigation.goBack()}
-          navigation={navigation}
+          onBack={() => props.navigation.goBack()}
+          navigation={props.navigation}
         />
         <View style={styles.containerImage}>
           <Image
@@ -140,5 +144,13 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
+const mapStateToProps=(state,ownProps)=>{
+  console.log(ownProps.route.params.id) 
+    const id=ownProps.route.params.id
+    const movies=getDetail(state,id)
+    return{
+      movies:movies,
+    }
+}
 
-export default DetailMovie;
+export default connect(mapStateToProps)(DetailMovie);

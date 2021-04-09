@@ -11,6 +11,8 @@ import {
   Dimensions,
 } from 'react-native';
 import Header from '../Component/HeaderDrawer'
+import { getOscar } from '../Redux/Selector';
+import {connect} from 'react-redux'
 import movies from '../Service/index';
 
 const urlImage = 'https://image.tmdb.org/t/p/w500/';
@@ -42,17 +44,17 @@ function ItemList(props) {
   );
 }
 
-const OscarMovies = ({navigation}) => {
+const OscarMovies = (props) => {
   return (
     <View style={styles.wrap}>
-      <Header title={"Oscar Moivies"} navigation={navigation} />
+      <Header title={"Oscar Moivies"} navigation={props.navigation} />
 
-      <View>
+    <View style={{paddingBottom:70}}>
         <FlatList
-          data={movies}
+          data={props.movies}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <ItemList data={item} navigation={navigation} />
+            <ItemList data={item} navigation={props.navigation} />
           )}
         />
       </View>
@@ -125,4 +127,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 });
-export default OscarMovies;
+const mapStateToProps=state=>({
+  movies:getOscar(state)
+})
+export default connect(mapStateToProps) (OscarMovies);

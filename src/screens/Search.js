@@ -26,6 +26,8 @@ import {
   Keyboard,
 } from 'react-native';
 import movies from '../Service/index';
+import {getState} from '../Redux/Selector'
+import { connect } from 'react-redux';
 const widthWindow = Dimensions.get('window').width;
 const urlImage = 'https://image.tmdb.org/t/p/w500/';
 
@@ -57,7 +59,7 @@ function ItemList(props) {
   );
 }
 
-const searchEngine = ({navigation, route}) => {
+const searchEngine = ({navigation, route,movies }) => {
   const [dataSearch, setDataSearch] = useState([]);
   const [search, setSearch] = useState('');
   const [result, setResult] = useState(true);
@@ -88,7 +90,11 @@ const searchEngine = ({navigation, route}) => {
     
       <View style={styles.wrap}>
         <KeyboardAvoidingView>
+         
           <View style={styles.containerInput}>
+             <TouchableOpacity style={styles.btBack} onPress={()=>navigation.goBack()}>
+        <Image style={styles.imgBack} source={require('../Image/icons8-go-back-64.png')}></Image>
+      </TouchableOpacity>
             <TextInput
               style={styles.input}
               placeholder={'Search'}
@@ -135,7 +141,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   container: {
-    padding: 10,
+    paddingTop: 10,
     backgroundColor: 'rgb(204, 204, 204)',
 
     flexDirection: 'row',
@@ -149,8 +155,18 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderWidth: 1,
     borderRadius: 10,
-    width: '80%',
+    width: '70%',
     marginBottom: 10,
+    fontSize:20,
+    marginLeft:60
+  },
+  btBack:{
+  
+    position:'absolute',
+    top:0,
+    
+    left:5
+
   },
   imgSearch: {
     width: 30,
@@ -158,6 +174,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginLeft: 20,
     marginTop: 15,
+  },
+  imgBack: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+   
   },
   image: {
     width: 100,
@@ -184,5 +206,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 });
+const mapStateToProps=(state)=>({
+  movies:getState(state)
+})
 
-export default searchEngine;
+export default connect(mapStateToProps)(searchEngine);

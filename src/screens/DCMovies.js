@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import { connect } from 'react-redux';
 import Header from '../Component/HeaderDrawer'
+import { getDC } from '../Redux/Selector';
 import {DCMovies as movies} from '../Service/index';
 const urlImage = 'https://image.tmdb.org/t/p/w500/';
 function ItemList(props) {
@@ -41,16 +43,16 @@ function ItemList(props) {
 }
 
 
-const OscarMovies = ({navigation}) => {
+const OscarMovies = (props) => {
   return (
     <View style={styles.wrap}>
-      <Header title={"DC Movies"}  navigation={navigation} />
-      <View>
+      <Header title={"DC Movies"}  navigation={props.navigation} />
+      <View style={{paddingBottom:70}}>
         <FlatList
-          data={movies}
+          data={props.movies}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <ItemList data={item} navigation={navigation} />
+            <ItemList data={item} navigation={props.navigation} />
           )}
         />
       </View>
@@ -122,4 +124,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 });
-export default OscarMovies;
+const mapStateToProps=(state)=>(
+{
+  movies:getDC(state)
+})
+export default connect(mapStateToProps) (OscarMovies);

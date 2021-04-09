@@ -10,10 +10,12 @@ import {
 function Header({title, onBack,navigation}) {
   return (
     <View style={styles.header}>
-      <TouchableOpacity style={styles.btBack} onPress={onBack}>
-        <Text style={styles.txtBt}>Back</Text>
-      </TouchableOpacity>
-      <Text style={styles.txtHeader}>{title}</Text>
+      
+          <TouchableOpacity style={styles.btBack} onPress={()=>navigation.goBack()}>
+        <Image style={styles.imgBack} source={require('../Image/icons8-go-back-64.png')}></Image>
+      </TouchableOpacity> 
+        
+      <Text style={styles.txtHeader}>Detail Movie</Text>
       <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <Image
           style={styles.imgSearch}
@@ -33,8 +35,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   txtHeader: {
-    marginLeft: 90,
+    width:'60%',
     marginTop: 8,
+    marginLeft:100,
     fontSize: 30,
     color: '#000',
   },
@@ -56,8 +59,23 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: 'contain',
-    marginLeft: 30,
+    
     marginTop: 15,
+  },
+   btBack:{
+  
+    position:'absolute',
+    top:5,
+    
+    left:5
+
+  },
+ 
+  imgBack: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+   
   },
 });
 

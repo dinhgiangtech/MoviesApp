@@ -28,13 +28,16 @@ import {
 
 import RootNavigation from './src/NavigationDrawer';
 import Main from './src/Main'
-import {mainReducer} from './src/Redux/reducer'
-import {Provider} from 'react-redux'
-import {createStore} from 'redux'
-const store=createStore(mainReducer)
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import mainReducer from './src/Redux/reducer'
+import { Provider } from 'react-redux'
+import watcherSaga from './src/Redux/saga'
 
-
-
+const sagaMiddleware=createSagaMiddleware()
+// Note: this API requires redux@>=3.1.0
+const store = createStore(mainReducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(watcherSaga)
 
 
 const App = () => {

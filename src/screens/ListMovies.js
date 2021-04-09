@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -8,11 +8,18 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 
 import Header from '../Component/HeaderDrawer'
 import { useDispatch, useSelector } from 'react-redux';
-import {filterMarvel} from '../Redux/actions'
+import { FETCH_PRODUCT_ERROR, FETCH_PRODUCT_PENDING, FETCH_PRODUCT_SUCCESS } from '../Redux/typeActions'
+import { connect } from 'react-redux'
+
+
+
+
 
 
 const urlImage = 'https://image.tmdb.org/t/p/w500/';
@@ -20,13 +27,13 @@ function ItemList(props) {
   return (
     <TouchableOpacity
       onPress={() =>
-        props.navigation.navigate('DetailMovie', {id: props.data.id})
+        props.navigation.navigate('DetailMovie', { id: props.data.id })
       }>
       <View style={styles.container}>
         <View>
           <Image
             style={styles.image}
-            source={{uri: urlImage + props.data.poster_path}}
+            source={{ uri: urlImage + props.data.poster_path }}
           />
         </View>
         <View style={styles.content}>
@@ -43,31 +50,50 @@ function ItemList(props) {
     </TouchableOpacity>
   );
 }
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+const ListMovies = (props) => {
 
-const ListMovies = ({navigation}) => {
-  const data = useSelector(state => state.movies)
+  const [refreshing, setRefreshing] = useState(false)
+  const dispatch = useDispatch()
   
-  const [movies,setMovies]=useState([data])
+  const { movies, pending, error } = useSelector(state => state)
   useEffect(() => {
-    // Update the document title using the browser API
-   
-  },[]);
+    dispatch({ type: "API_CALL_REQUEST" })
+  }, [])
+  
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
 
-  
-  
+    dispatch({ type: "API_CALL_REQUEST" })
+    setRefreshing(refreshing => refreshing = false)
+
+
+  }
+
+
+    , [refreshing]);
+
   return (
     <View style={styles.wrap}>
-      <Header title={"Marvel Movies"} navigation={navigation} />
+      <Header title={"Marvel Movies"} navigation={props.navigation} />
 
-      <View>
-       
-        <FlatList
-          data={movies}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <ItemList data={item} navigation={navigation} />
-          )}
-        />
+      <View style={{ paddingBottom: 70 }}>
+        {
+          props.pending = !FETCH_PRODUCT_PENDING ? <ActivityIndicator style={{
+            flex: 1, justifyContent: 'center',
+            alignItems: 'center'
+          }} /> :
+            <FlatList
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+              data={movies}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <ItemList data={item} navigation={props.navigation} />
+              )}
+            />
+        }
       </View>
     </View>
   );
@@ -76,6 +102,7 @@ const styles = StyleSheet.create({
   wrap: {
     flex: 1,
     backgroundColor: 'rgb(26, 26, 26)',
+
   },
   header: {
     width: '100%',
@@ -146,4 +173,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+
+
 export default ListMovies;
